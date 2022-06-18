@@ -1,0 +1,97 @@
+services:
+  web:
+    restart: unless-stopped
+    build:
+      context: ./service/httpd
+    volumes:
+      - ${WWW_ROOT:-../src}:/home/www
+      - ${CONF_ROOT:-./conf}/httpd:/usr/local/apache2/conf
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      default:
+        ipv4_address: 172.0.0.2
+
+  db:
+    restart: unless-stopped
+    build:
+      context: ./service/mysql
+    volumes:
+      - ${MYSQL_DATA:-../mysql}:/var/lib/mysql
+      - ${CONF_ROOT:-./conf}/mysql:/etc/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-elql}
+    networks:
+      default:
+        ipv4_address: 172.0.0.3
+        aliases:
+          - whoisgh_db
+          - dev.whoiswork.com
+          - raindev
+
+  dns:
+    restart: unless-stopped
+    build:
+      context: ./service/dnsmasq
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+    networks:
+      default:
+        ipv4_address: 172.0.0.254
+#    cap_add:
+#      - NET_ADMIN
+
+  php81:
+    restart: unless-stopped
+    build:
+      context: ./service/php81-fpm
+    volumes:
+      - ${WWW_ROOT:-../src}:/home/www
+      - ${CONF_ROOT:-./conf}/php/8.1:/usr/local/etc/php
+    networks:
+      default:
+        ipv4_address: 172.0.0.81
+
+  php80:
+    restart: unless-stopped
+    build:
+      context: ./service/php80-fpm
+    volumes:
+      - ${WWW_ROOT:-../src}:/home/www
+      - ${CONF_ROOT:-./conf}/php/8.0:/usr/local/etc/php
+    networks:
+      default:
+        ipv4_address: 172.0.0.80
+
+  php74:
+    restart: unless-stopped
+    build:
+      context: ./service/php74-fpm
+    volumes:
+      - ${WWW_ROOT:-../src}:/home/www
+      - ${CONF_ROOT:-./conf}/php/7.4:/usr/local/etc/php
+    networks:
+      default:
+        ipv4_address: 172.0.0.74
+
+  php56:
+    restart: unless-stopped
+    build:
+      context: service/php56-fpm
+    volumes:
+      - ${WWW_ROOT:-../src}:/home/www
+      - ${CONF_ROOT:-./conf}/php/5.6:/usr/local/etc/php
+    networks:
+      default:
+        ipv4_address: 172.0.0.56
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.0.0.0/24
