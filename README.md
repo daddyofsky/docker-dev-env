@@ -39,20 +39,46 @@ docker-compose up -d
 Directory example 
 ```shell
 work
-    docker            # docker install source
-        conf
-        service
-    mysql             # mysql database directory
-    src               # working source 
-        foo           # --> http://foo.zzz
-        bar           # --> http://bar.zzz
+├── docker                        # git root
+│   ├── service                   # docker service context
+│   │   └── docker-compose.yml
+│   └── conf                      # server conf directory
+│       ├── httpd                 # httpd conf
+│       ├── mysql                 # mysql conf
+│       └── php                   # php conf
+│           ├── 5.6               # php conf for 5.6    
+│           ├── 7.4               # php conf for 7.4    
+│           ├── 8.0               # php conf for 8.0    
+│           └── 8.1               # php conf for 8.1    
+│
+├── mysql                         # mysql database directory
+└── src                           # working source 
+    ├── foo                       # --> http://foo.zzz
+    └── bar                       # --> http://bar.zzz
 ```
 
-* Httpd - All subdirectory of `src` is matched to `*.zzz` automatically 
-* Mysql - 127.0.0.1:3306
-* PHP modules
-  * mysqli
-  * pdo_mysql
-  * xdebug
-  * gd
-  * gmp
+
+* Name Server
+  * host : 127.0.0.1
+  * port : 53
+* Httpd
+  * host : 127.0.0.1
+  * port : 80
+  * vhost directory mapping
+    * http://*.zzz --> /home/www/* --> src/* 
+  * vhost php mapping
+    * http://*.zzz --> PHP 5.6
+    * http://56.*.zzz --> PHP 5.6
+    * http://74.*.zzz --> PHP 7.4
+    * http://80.*.zzz --> PHP 8.0
+    * http://81.*.zzz --> PHP 8.1
+* Mysql
+  * host : 127.0.0.1
+  * port : 3306
+* PHP
+  * additional modules
+    * mysqli
+    * pdo_mysql
+    * xdebug
+    * gd
+    * gmp
