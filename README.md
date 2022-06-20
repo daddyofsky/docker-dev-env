@@ -57,7 +57,6 @@ work
     └── bar                       # --> http://bar.zzz
 ```
 
-
 * Name Server
   * host : 127.0.0.1
   * port : 53
@@ -65,7 +64,7 @@ work
   * host : 127.0.0.1
   * port : 80
   * vhost directory mapping
-    * http://*.zzz --> /home/www/* --> src/* 
+    * http://\*.zzz --> /home/www/* --> src/* 
   * vhost php mapping
     * http://*.zzz --> PHP 5.6
     * http://56.*.zzz --> PHP 5.6
