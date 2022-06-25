@@ -15,8 +15,8 @@ services:
 
   db:
     restart: unless-stopped
-    build:
-      context: ./service/mysql
+    image: mariadb
+    #image: mysql
     volumes:
       - ${MYSQL_DATA:-../mysql}:/var/lib/mysql
       - ${CONF_ROOT:-./conf}/mysql:/etc/mysql
