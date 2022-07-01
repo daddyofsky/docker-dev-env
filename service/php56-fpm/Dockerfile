@@ -11,6 +11,5 @@ RUN apk update \
     && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
 	&& docker-php-ext-install mysql mysqli pdo_mysql gmp gd \
 	&& pecl install xdebug-2.5.5 && docker-php-ext-enable xdebug \
-    && apk del gmp-dev zlib-dev libpng-dev libjpeg-turbo-dev freetype-dev .build-deps
 
 CMD ["php-fpm"]
