@@ -10,6 +10,6 @@ RUN apk update \
     && echo "zend_extension=/usr/lib/php5/modules/opcache.so" > /usr/local/etc/php/conf.d/opcache.ini \
     && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
 	&& docker-php-ext-install mysql mysqli pdo_mysql gmp gd \
-	&& pecl install xdebug-2.5.5 && docker-php-ext-enable xdebug \
+	&& pecl install xdebug-2.5.5 && docker-php-ext-enable xdebug
 
 CMD ["php-fpm"]
