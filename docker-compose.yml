@@ -45,6 +45,18 @@ services:
 #    cap_add:
 #      - NET_ADMIN
 
+  php82:
+    restart: unless-stopped
+    build:
+      context: ./service/php82-fpm
+    volumes:
+      - ${WWW_ROOT:-../src}:/home/www
+      - ${CONF_ROOT:-./conf}/php/8.2:/usr/local/etc/php
+      - /opt/work/php:/opt/work/php
+    networks:
+      default:
+        ipv4_address: 172.0.0.82
+
   php81:
     restart: unless-stopped
     build:
