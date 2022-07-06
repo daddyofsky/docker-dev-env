@@ -1,13 +1,14 @@
 # docker-dev-env
-Web dev environment with multi PHP version using Docker  
-Docker를 이용한 멀티 PHP 버전 웹 개발 환경 구성 
+`EN`Web dev environment with multi PHP version using Docker  
+`KO`Docker를 이용한 멀티 PHP 버전 웹 개발 환경 구성 
 
 ## Specs
 
 > * httpd
-> * mysqld
-> * dnsmasqd
+> * mariadb (mysql)
+> * dnsmasq
 > * PHP
+>   * 8.2
 >   * 8.1
 >   * 8.0
 >   * 7.4
@@ -19,17 +20,18 @@ Docker를 이용한 멀티 PHP 버전 웹 개발 환경 구성
 * Clone or Download this code
 * Modify .env
 
-```dotenv
-CONF_ROOT=./conf
-WWW_ROOT=../src
-MYSQL_DATA=../mysql
-MYSQL_ROOT_PASSWORD=1234
-```
+  ```dotenv
+  CONF_ROOT=./conf
+  WWW_ROOT=../src
+  DB_TYPE=mariadb # or mysql
+  MYSQL_DATA=../mysql
+  MYSQL_ROOT_PASSWORD=1234
+  ```
 
-* Build
-```shell
-docker-compose up -d
-```
+* Build and Run
+  ```shell
+  docker compose -f /path/docker-compose.yml up -d
+  ```
 
 * Set DNS to `127.0.0.1`
 
@@ -37,7 +39,7 @@ docker-compose up -d
 ## Description
 
 Directory example 
-```shell
+```text
 work
 ├── docker                        # git root
 │   ├── service                   # docker service context
@@ -49,7 +51,8 @@ work
 │           ├── 5.6               # php conf for 5.6    
 │           ├── 7.4               # php conf for 7.4    
 │           ├── 8.0               # php conf for 8.0    
-│           └── 8.1               # php conf for 8.1    
+│           ├── 8.1               # php conf for 8.1    
+│           └── 8.2               # php conf for 8.2    
 │
 ├── mysql                         # mysql database directory
 └── src                           # working source 
@@ -64,14 +67,15 @@ work
   * host : 127.0.0.1
   * port : 80
   * vhost directory mapping
-    * http://\*.zzz --> /home/www/* --> src/* 
+    * `*.zzz` --> `Docker`/home/www/* --> `Local`src/* 
   * vhost php mapping
-    * http://*.zzz --> PHP 5.6
-    * http://56.*.zzz --> PHP 5.6
-    * http://74.*.zzz --> PHP 7.4
-    * http://80.*.zzz --> PHP 8.0
-    * http://81.*.zzz --> PHP 8.1
-* Mysql
+    * `*.zzz` --> PHP 5.6
+    * `56.*.zzz` --> PHP 5.6
+    * `74.*.zzz` --> PHP 7.4
+    * `80.*.zzz` --> PHP 8.0
+    * `81.*.zzz` --> PHP 8.1  
+    * `82.*.zzz` --> PHP 8.2  
+* Mariadb (Mysql)
   * host : 127.0.0.1
   * port : 3306
 * PHP

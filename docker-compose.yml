@@ -15,8 +15,7 @@ services:
 
   db:
     restart: unless-stopped
-    image: mariadb
-    #image: mysql
+    image: ${DB_IMAGE}
     volumes:
       - ${MYSQL_DATA:-../mysql}:/var/lib/mysql
       - ${CONF_ROOT:-./conf}/mysql:/etc/mysql
@@ -36,6 +35,8 @@ services:
     restart: unless-stopped
     build:
       context: ./service/dnsmasq
+    volumes:
+      - ${CONF_ROOT:-./conf}/dnsmasq.d:/etc/dnsmasq.d
     ports:
       - 53:53/tcp
       - 53:53/udp
@@ -53,6 +54,11 @@ services:
       - ${WWW_ROOT:-../src}:/home/www
       - ${CONF_ROOT:-./conf}/php/8.2:/usr/local/etc/php
       - /opt/work/php:/opt/work/php
+    depends_on:
+      - dns
+    dns:
+      - 172.0.0.254
+      - 8.8.8.8
     networks:
       default:
         ipv4_address: 172.0.0.82
@@ -64,6 +70,12 @@ services:
     volumes:
       - ${WWW_ROOT:-../src}:/home/www
       - ${CONF_ROOT:-./conf}/php/8.1:/usr/local/etc/php
+      - /opt/work/php:/opt/work/php
+    depends_on:
+      - dns
+    dns:
+      - 172.0.0.254
+      - 8.8.8.8
     networks:
       default:
         ipv4_address: 172.0.0.81
@@ -75,6 +87,12 @@ services:
     volumes:
       - ${WWW_ROOT:-../src}:/home/www
       - ${CONF_ROOT:-./conf}/php/8.0:/usr/local/etc/php
+      - /opt/work/php:/opt/work/php
+    depends_on:
+      - dns
+    dns:
+      - 172.0.0.254
+      - 8.8.8.8
     networks:
       default:
         ipv4_address: 172.0.0.80
@@ -86,6 +104,12 @@ services:
     volumes:
       - ${WWW_ROOT:-../src}:/home/www
       - ${CONF_ROOT:-./conf}/php/7.4:/usr/local/etc/php
+      - /opt/work/php:/opt/work/php
+    depends_on:
+      - dns
+    dns:
+      - 172.0.0.254
+      - 8.8.8.8
     networks:
       default:
         ipv4_address: 172.0.0.74
@@ -97,6 +121,12 @@ services:
     volumes:
       - ${WWW_ROOT:-../src}:/home/www
       - ${CONF_ROOT:-./conf}/php/5.6:/usr/local/etc/php
+      - /opt/work/php:/opt/work/php
+    depends_on:
+      - dns
+    dns:
+      - 172.0.0.254
+      - 8.8.8.8
     networks:
       default:
         ipv4_address: 172.0.0.56
