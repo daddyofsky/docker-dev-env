@@ -109,6 +109,18 @@ services:
       default:
         ipv4_address: 172.0.0.56
 
+  php54:
+    restart: unless-stopped
+    build:
+      context: service/php54-fpm
+    volumes:
+      - ${WWW_ROOT:-../src}:/home/www
+      #- ${CONF_ROOT:-./conf}/php/5.4:/usr/local/etc
+      - /opt/work/php:/opt/work/php
+    networks:
+      default:
+        ipv4_address: 172.0.0.54
+
   php53:
     restart: unless-stopped
     build:
