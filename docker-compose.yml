@@ -43,8 +43,6 @@ services:
     networks:
       default:
         ipv4_address: 172.0.0.254
-#    cap_add:
-#      - NET_ADMIN
 
   php82:
     restart: unless-stopped
@@ -71,11 +69,6 @@ services:
       - ${WWW_ROOT:-../src}:/home/www
       - ${CONF_ROOT:-./conf}/php/8.1:/usr/local/etc/php
       - /opt/work/php:/opt/work/php
-    depends_on:
-      - dns
-    dns:
-      - 172.0.0.254
-      - 8.8.8.8
     networks:
       default:
         ipv4_address: 172.0.0.81
@@ -88,11 +81,6 @@ services:
       - ${WWW_ROOT:-../src}:/home/www
       - ${CONF_ROOT:-./conf}/php/8.0:/usr/local/etc/php
       - /opt/work/php:/opt/work/php
-    depends_on:
-      - dns
-    dns:
-      - 172.0.0.254
-      - 8.8.8.8
     networks:
       default:
         ipv4_address: 172.0.0.80
@@ -105,11 +93,6 @@ services:
       - ${WWW_ROOT:-../src}:/home/www
       - ${CONF_ROOT:-./conf}/php/7.4:/usr/local/etc/php
       - /opt/work/php:/opt/work/php
-    depends_on:
-      - dns
-    dns:
-      - 172.0.0.254
-      - 8.8.8.8
     networks:
       default:
         ipv4_address: 172.0.0.74
@@ -122,14 +105,21 @@ services:
       - ${WWW_ROOT:-../src}:/home/www
       - ${CONF_ROOT:-./conf}/php/5.6:/usr/local/etc/php
       - /opt/work/php:/opt/work/php
-    depends_on:
-      - dns
-    dns:
-      - 172.0.0.254
-      - 8.8.8.8
     networks:
       default:
         ipv4_address: 172.0.0.56
+
+  php53:
+    restart: unless-stopped
+    build:
+      context: service/php53-fpm
+    volumes:
+      - ${WWW_ROOT:-../src}:/home/www
+      - ${CONF_ROOT:-./conf}/php/5.3:/usr/local/etc
+      - /opt/work/php:/opt/work/php
+    networks:
+      default:
+        ipv4_address: 172.0.0.53
 
 networks:
   default:
