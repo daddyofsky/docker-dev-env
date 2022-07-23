@@ -8,11 +8,13 @@
 > * mariadb (mysql)
 > * dnsmasq
 > * PHP
->   * 8.2
+>   * 8.2 (beta)
 >   * 8.1
 >   * 8.0
 >   * 7.4
 >   * 5.6
+>   * 5.4
+>   * 5.3
 
 ## Install
 
@@ -48,6 +50,8 @@ work
 │       ├── httpd                 # httpd conf
 │       ├── mysql                 # mysql conf
 │       └── php                   # php conf
+│           ├── 5.6               # php conf for 5.3    
+│           ├── 5.6               # php conf for 5.4    
 │           ├── 5.6               # php conf for 5.6    
 │           ├── 7.4               # php conf for 7.4    
 │           ├── 8.0               # php conf for 8.0    
@@ -70,6 +74,8 @@ work
     * `*.zzz` --> `Docker`/home/www/* --> `Local`src/* 
   * vhost php mapping
     * `*.zzz` --> PHP 5.6
+    * `53.*.zzz` --> PHP 5.3
+    * `54.*.zzz` --> PHP 5.4
     * `56.*.zzz` --> PHP 5.6
     * `74.*.zzz` --> PHP 7.4
     * `80.*.zzz` --> PHP 8.0
