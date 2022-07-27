@@ -52,8 +52,6 @@ services:
       - ${WWW_ROOT:-../src}:/home/www
       - ${CONF_ROOT:-./conf}/php/8.2:/usr/local/etc/php
       - /opt/work/php:/opt/work/php
-    depends_on:
-      - dns
     dns:
       - 172.0.0.254
       - 8.8.8.8

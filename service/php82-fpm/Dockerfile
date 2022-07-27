@@ -8,6 +8,6 @@ RUN apk update \
     	zlib-dev libpng libpng-dev libjpeg libjpeg-turbo-dev freetype freetype-dev \
     	--virtual .build-deps $PHPIZE_DEPS \
     && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
-    && docker-php-ext-install mysqli pdo_mysql opcache gmp gd
+    && docker-php-ext-install mysqli pdo_mysql gmp gd
 
 CMD ["php-fpm"]
