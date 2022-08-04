@@ -1,0 +1,23 @@
+#!/bin/sh
+
+if [ "$1" == "" ]; then
+	echo "$0 <service> [cmd]"
+	exit
+fi
+
+DOCKER_BIN="/usr/local/bin/docker";
+DOCKER_YML="/opt/work/docker/docker-compose.yml"
+
+TARGET=`echo "$1" | sed -r 's/^([0-9]+)/php\1/'`;
+
+if [ "$2" != "" ]; then
+    ARGS="${@:2}"
+else
+    ARGS="sh"
+fi
+
+echo
+echo ">> $DOCKER_BIN compose -f $DOCKER_YML exec $TARGET $ARGS"
+echo
+$DOCKER_BIN compose -f $DOCKER_YML exec $TARGET $ARGS
+exit $?
