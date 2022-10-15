@@ -9,7 +9,7 @@ RUN apk update \
     	gmp-dev mariadb-dev libmcrypt-dev \
     	zlib-dev libpng libpng-dev libjpeg libjpeg-turbo-dev freetype freetype-dev \
     	--virtual .build-deps $PHPIZE_DEPS \
-    && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/lib/ --with-jpeg-dir=/usr/lib/ \
 	&& docker-php-ext-install mysql mysqli pdo_mysql gmp mcrypt gd \
 	&& pecl install ZendOpcache-7.0.5 xdebug-2.2.7 && docker-php-ext-enable opcache xdebug gmp mcrypt gd
 

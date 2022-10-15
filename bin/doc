@@ -1,13 +1,13 @@
 #!/bin/sh
 
-DOCKER="/usr/local/bin/docker";
+DOCKER_BIN="/usr/local/bin/docker";
 DOCKER_YML="/opt/work/docker/docker-compose.yml"
 
 ARGS=`echo " ${@:1}" | sed -r 's/ ([0-9]+)/ php\1/g' | xargs`;
 
 # docker
 if [[ "$1" == "images" ]] || [[ "$1" == "rmi" ]]; then
-    ARGS=`echo "${ARGS}" | sed -r 's/ ([a-z]+)/ docker_\1/g'`
+    ARGS=`echo "${ARGS}" | sed -r 's/ ([a-z]+)/ docker-\1/g'`
     echo
     echo ">> $DOCKER_BIN $ARGS"
     echo
