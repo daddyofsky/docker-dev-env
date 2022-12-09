@@ -1,4 +1,4 @@
-FROM php:8.2.0RC4-fpm-alpine
+FROM php:8.2.0-fpm-alpine
 WORKDIR /opt/work/php
 WORKDIR /home/www
 
@@ -10,6 +10,6 @@ RUN apk update \
     && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
     && docker-php-ext-install mysqli pdo_mysql gmp gd
 
-RUN apk add --update linux-headers && pecl install xdebug-3.2.0RC1
+RUN apk add --update linux-headers && pecl install xdebug-3.2.0
 
 CMD ["php-fpm"]
