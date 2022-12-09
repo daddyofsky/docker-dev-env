@@ -8,7 +8,7 @@
 > * mariadb (mysql)
 > * dnsmasq
 > * PHP
->   * 8.2 (beta)
+>   * 8.2
 >   * 8.1
 >   * 8.0
 >   * 7.4
