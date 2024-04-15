@@ -15,9 +15,10 @@ services:
 
   db:
     restart: unless-stopped
-    image: ${DB_IMAGE}
+    image: mysql:8.3
+    platform: linux/arm64
     volumes:
-      - ${MYSQL_DATA:-../mysql}:/var/lib/mysql
+      - ../mysql:/var/lib/mysql
       - ${CONF_ROOT:-./conf}/mysql:/etc/mysql
     ports:
       - 3306:3306
@@ -26,6 +27,21 @@ services:
     networks:
       default:
         ipv4_address: 172.0.0.3
+
+  db5:
+    restart: unless-stopped
+    image: mysql:5.7
+    platform: linux/amd64
+    volumes:
+      - ../mysql5:/var/lib/mysql
+      - ${CONF_ROOT:-./conf}/mysql5:/etc/mysql
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-elql}
+    networks:
+      default:
+        ipv4_address: 172.0.0.5
         aliases:
           - whoisgh_db
           - dev.whoiswork.com
@@ -43,6 +59,20 @@ services:
     networks:
       default:
         ipv4_address: 172.0.0.254
+    cap_add:
+      - NET_ADMIN
+
+  php83:
+    restart: unless-stopped
+    build:
+      context: ./service/php83-fpm
+    volumes:
+      - ${WWW_ROOT:-../src}:/home/www
+      - ${CONF_ROOT:-./conf}/php/8.3:/usr/local/etc/php
+      - /opt/work/php:/opt/work/php
+    networks:
+      default:
+        ipv4_address: 172.0.0.83
 
   php82:
     restart: unless-stopped
@@ -108,6 +138,7 @@ services:
     restart: unless-stopped
     build:
       context: service/php54-fpm
+    platform: linux/amd64
     volumes:
       - ${WWW_ROOT:-../src}:/home/www
       - ${CONF_ROOT:-./conf}/php/5.4:/usr/local/etc
@@ -120,6 +151,7 @@ services:
     restart: unless-stopped
     build:
       context: service/php53-fpm
+    platform: linux/amd64
     volumes:
       - ${WWW_ROOT:-../src}:/home/www
       - ${CONF_ROOT:-./conf}/php/5.3:/usr/local/etc
