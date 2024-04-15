@@ -74,7 +74,7 @@ work
   - host : 127.0.0.1
   - port : 80
   - vhost directory mapping
-    - `*.zzz` --> `Docker`/home/www/- --> `Local`src/- 
+    - `*.zzz` --> `Docker` /home/www/* --> `Local` src/* 
   - vhost php mapping
     - `*.zzz` --> PHP 8.3
     - `53.*.zzz` --> PHP 5.3
